@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  */
 @Autonomous(name = "AutoTemplate", group = "default")
 @Disabled
-public class AutoTemplate extends OpModeTemplate {
+public class AutoTemplate extends RangerOp {
     //Declare and Initialize any variables needed for this specific autonomous program
 
 
