@@ -73,7 +73,8 @@ public class RangerOp extends OpMode {
   */
 
     void updateDriveTrain() {
-        
+        currentLeftPwr = -gamepad1.left_stick_y * DRIVE_PWR_MAX;
+        currentRightPwr = -gamepad1.right_stick_y * DRIVE_PWR_MAX;
     }
 
 
