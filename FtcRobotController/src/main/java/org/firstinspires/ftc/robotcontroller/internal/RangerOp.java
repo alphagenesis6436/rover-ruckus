@@ -18,7 +18,9 @@ public class RangerOp extends OpMode {
     DcMotor rightMotor;
 
     //Declare any variables & constants pertaining to specific robot mechanisms (i.e. drive train)
-
+    final double DRIVE_PWR_MAX = 0.80;
+    double currentLeftPwr = 0.0;
+    double currentRightPwr = 0.0;
 
     public RangerOp() {}
 
@@ -26,7 +28,8 @@ public class RangerOp extends OpMode {
         //Initialize motors & set direction
         leftMotor = hardwareMap.dcMotor.get("lm");
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
+        rightMotor = hardwareMap.dcMotor.get("rm");
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         //Initialize servos
 
         //Initialize sensors
@@ -47,7 +50,7 @@ public class RangerOp extends OpMode {
 
     void updateData() {
         //Add in update methods for specific robot mechanisms
-
+        updateDriveTrain();
     }
 
     void initialization() {
@@ -68,6 +71,10 @@ public class RangerOp extends OpMode {
          //Step 2: (Physical Instructions on how to control specific robot mechanism using controller buttons)
          //Step ...: (Physical Instructions on how to control specific robot mechanism using controller buttons)
   */
+
+    void updateDriveTrain() {
+        
+    }
 
 
     //Create variables/methods that will be used in ALL autonomous programs for this specific robot
