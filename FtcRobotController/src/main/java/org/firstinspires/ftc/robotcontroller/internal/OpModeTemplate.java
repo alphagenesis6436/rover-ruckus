@@ -76,10 +76,10 @@ public class OpModeTemplate extends OpMode {
     void resetEncoders() {
 
     }
-    void runEncoders() {
+    void runConstantSpeed() {
 
     }
-    void runWithoutEncoders() {
+    void runConstantPower() {
 
     }
     void resetSensors() {
