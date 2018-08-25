@@ -27,9 +27,9 @@ public class RangerOp extends OpMode {
     @Override public void init() {
         //Initialize motors & set direction
         leftMotor = hardwareMap.dcMotor.get("lm");
-        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightMotor = hardwareMap.dcMotor.get("rm");
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         telemetry();
     }
