@@ -14,22 +14,16 @@ package org.firstinspires.ftc.robotcontroller.internal;
 //@Disabled
 public class RangerOp extends OpMode {
     //Declare any motors
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+
 
     //Declare any variables & constants pertaining to drive train
-    final double DRIVE_PWR_MAX = 0.80;
-    double currentLeftPwr = 0.0;
-    double currentRightPwr = 0.0;
+
 
     public RangerOp() {}
 
     @Override public void init() {
         //Initialize motors & set direction
-        leftMotor = hardwareMap.dcMotor.get("lm");
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightMotor = hardwareMap.dcMotor.get("rm");
-        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         telemetry();
     }
@@ -52,16 +46,12 @@ public class RangerOp extends OpMode {
 
     void initialization() {
         //Clip and Initialize Drive Train
-        currentLeftPwr = Range.clip (currentLeftPwr,-DRIVE_PWR_MAX,DRIVE_PWR_MAX);
-        leftMotor.setPower(currentLeftPwr);
-        currentRightPwr = Range.clip (currentRightPwr,-DRIVE_PWR_MAX,DRIVE_PWR_MAX);
-        rightMotor.setPower(currentRightPwr);
+
 
     }
     void telemetry() {
         //Show Data for Drive Train
-        telemetry.addData("LM Pwr",leftMotor.getPower());
-        telemetry.addData("RM Pwr",rightMotor.getPower());
+
     }
 
     //Create Methods that will update the driver data
@@ -77,8 +67,7 @@ public class RangerOp extends OpMode {
     //Controlled by Driver 1
     //step 1: Push up/down the left/right stick to control the left/right drive motors
     void updateDriveTrain() {
-        currentLeftPwr = -gamepad1.left_stick_y * DRIVE_PWR_MAX;
-        currentRightPwr = -gamepad1.right_stick_y * DRIVE_PWR_MAX;
+        
     }
 
 
