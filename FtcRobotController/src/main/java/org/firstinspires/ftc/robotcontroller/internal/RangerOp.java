@@ -55,8 +55,8 @@ public class RangerOp extends OpMode {
 
     void initialization() {
         //Clip and Initialize Drive Train
-        leftPwr = Range.clip(leftPwr, maxPwr, -maxPwr);
-        rightPwr = Range.clip(rightPwr, maxPwr, -maxPwr);
+        leftPwr = Range.clip(leftPwr, -maxPwr, maxPwr);
+        rightPwr = Range.clip(rightPwr, -maxPwr, maxPwr);
         leftMotor.setPower(leftPwr);
         rightMotor.setPower(rightPwr);
 
