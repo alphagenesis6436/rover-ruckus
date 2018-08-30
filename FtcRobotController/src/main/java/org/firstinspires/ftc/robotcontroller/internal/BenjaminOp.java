@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.util.Range;
  * Updated by Alex on 6/1/2017.
  */
 
-@TeleOp(name = "KenChenOp", group = "Default")
+@TeleOp(name = "BenjaminOp", group = "Default")
 //@Disabled
-public class KenChenOp extends OpMode {
+public class BenjaminOp extends OpMode {
     //Declare any motors
     DcMotor leftMotor;
     DcMotor rightMotor;
@@ -22,7 +22,7 @@ public class KenChenOp extends OpMode {
     double leftPwr=0.0;
     double rightPwr=0.0;
 
-    public KenChenOp() {}
+    public BenjaminOp() {}
 
     @Override public void init() {
         //Initialize motors & set direction
