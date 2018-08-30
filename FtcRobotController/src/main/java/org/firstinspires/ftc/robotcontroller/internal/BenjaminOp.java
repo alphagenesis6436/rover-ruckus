@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Updated by Alex on 6/1/2017.
+ * Updated by Benji on 8/29/18.
+ * rEd RoBot
  */
 
 @TeleOp(name = "BenjaminOp", group = "Default")
