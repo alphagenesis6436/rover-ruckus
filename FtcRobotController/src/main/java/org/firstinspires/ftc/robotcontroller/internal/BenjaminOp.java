@@ -7,31 +7,32 @@ import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Updated by Alex on 6/1/2017.
+ * Updated by Benji on 8/29/18.
+ * rEd RoBot
  */
 
-@TeleOp(name = "RangerOp", group = "Default")
+@TeleOp(name = "BenjaminOp", group = "Default")
 //@Disabled
-public class RangerOp extends OpMode {
+public class BenjaminOp extends OpMode {
     //Declare any motors
-    DcMotor leftDrive;
-    DcMotor rightDrive;
+    DcMotor leftMotor;
+    DcMotor rightMotor;
 
     //Declare any variables & constants pertaining to drive train
-    final double DRIVE_PWR_MAX = 0.80;
-    double currentLeftPwr = 0.0;
-    double currentRightPwr = 0.0;
+    double maxPwr=0.8;
+    double leftPwr=0.0;
+    double rightPwr=0.0;
 
-
-    public RangerOp() {}
+    public BenjaminOp() {}
 
     @Override public void init() {
         //Initialize motors & set direction
-        leftDrive = hardwareMap.dcMotor.get("ld");
-        leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightDrive = hardwareMap.dcMotor.get("rd");
-        rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-
+        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor=hardwareMap.get(DcMotor.class,"lm");
+        rightMotor=hardwareMap.get(DcMotor.class,"rm");
+        leftMotor.setPower(leftPwr);
+        rightMotor.setPower(rightPwr);
         telemetry();
     }
     @Override public void loop() {
@@ -55,15 +56,17 @@ public class RangerOp extends OpMode {
 
     void initialization() {
         //Clip and Initialize Drive Train
-        currentLeftPwr = Range.clip(currentLeftPwr, -DRIVE_PWR_MAX, DRIVE_PWR_MAX);
-        leftDrive.setPower(currentLeftPwr);
-        currentRightPwr = Range.clip(currentRightPwr, -DRIVE_PWR_MAX, DRIVE_PWR_MAX);
-        rightDrive.setPower(currentRightPwr);
+        leftPwr = Range.clip(leftPwr, -maxPwr, maxPwr);
+        rightPwr = Range.clip(rightPwr, -maxPwr, maxPwr);
+        leftMotor.setPower(leftPwr);
+        rightMotor.setPower(rightPwr);
+
     }
     void telemetry() {
         //Show Data for Drive Train
-        telemetry.addData("Left Drive Pwr", leftDrive.getPower());
-        telemetry.addData("Right Drive Pwr", rightDrive.getPower());
+        telemetry.addData("leftMotor",leftPwr);
+        telemetry.addData("rightMotor",rightPwr);
+
 
     }
 
@@ -80,8 +83,6 @@ public class RangerOp extends OpMode {
     //Controlled by Driver 1
     //step 1: Push up/down the left/right stick to control the left/right drive motors
     void updateDriveTrain() {
-        currentLeftPwr = -gamepad1.left_stick_y * DRIVE_PWR_MAX;
-        currentRightPwr = -gamepad1.right_stick_y * DRIVE_PWR_MAX;
 
     }
 
@@ -108,4 +109,5 @@ public class RangerOp extends OpMode {
     boolean waitSec(double elapsedTime) { return (this.time - setTime >= elapsedTime); }
 
 }
+
 
