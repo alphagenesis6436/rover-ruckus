@@ -1,38 +1,41 @@
 package org.firstinspires.ftc.robotcontroller.internal;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.*;
-        import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.util.Range;
 
 /**
- * Updated by Alex on 6/1/2017.
+ * Updated by Jack 8/29/2018
+ * blue rangerbot
  */
 
-@TeleOp(name = "RangerOp", group = "Default")
-//@Disabled
-public class RangerOp extends OpMode {
-    //Declare any motors
+@TeleOp(name = "OpMode Template", group = "Default")
+@Disabled
+public class JackOp extends OpMode {
+    //Declare any motors, servos, and sensors
     DcMotor leftDrive;
     DcMotor rightDrive;
 
-    //Declare any variables & constants pertaining to drive train
-    final double DRIVE_PWR_MAX = 0.8;
-    final double DRIVE_PWR_MIN = -0.8;
+
+    //Declare any variables & constants pertaining to specific robot mechanisms (i.e. drive train)
     double currentLeftPwr = 0.0;
     double currentRightPwr = 0.0;
+    final double DRIVE_PWR_MAX = 0.8;
 
-    public RangerOp() {}
+    public JackOp() {}
 
     @Override public void init() {
         //Initialize motors & set direction
         leftDrive = hardwareMap.dcMotor.get("ld");
         leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-
         rightDrive = hardwareMap.dcMotor.get("rd");
         rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightDrive.setPower(currentRightPwr);
+
+        //Initialize servos
+
+        //Initialize sensors
 
         telemetry();
     }
@@ -50,22 +53,25 @@ public class RangerOp extends OpMode {
 
     void updateData() {
         //Add in update methods for specific robot mechanisms
-        updateDriveTrain();
+        currentLeftPwr = -gamepad1.left_stick_y*DRIVE_PWR_MAX;
+        leftDrive.setPower(currentLeftPwr);
+        currentRightPwr = -gamepad1.right_stick_y*DRIVE_PWR_MAX;
+        rightDrive.setPower(currentRightPwr);
+
     }
 
     void initialization() {
-        //Clip and Initialize Drive Train
-        currentLeftPwr = Range.clip(currentLeftPwr, DRIVE_PWR_MIN, DRIVE_PWR_MAX);
+        //Clip and Initialize Specific Robot Mechanisms
+        currentLeftPwr = Range.clip(currentLeftPwr, -DRIVE_PWR_MAX, DRIVE_PWR_MAX);
         leftDrive.setPower(currentLeftPwr);
-
-        currentRightPwr = Range.clip(currentRightPwr, DRIVE_PWR_MIN, DRIVE_PWR_MAX);
-        rightDrive.setPower((currentRightPwr));
-
+        currentRightPwr = Range.clip(currentRightPwr, -DRIVE_PWR_MAX, DRIVE_PWR_MAX);
+        rightDrive.setPower(currentRightPwr);
     }
     void telemetry() {
-        //Show Data for Drive Train
+        //Show Data for Specific Robot Mechanisms
         telemetry.addData("LDP", leftDrive.getPower());
         telemetry.addData("RDP", rightDrive.getPower());
+
     }
 
     //Create Methods that will update the driver data
@@ -78,13 +84,6 @@ public class RangerOp extends OpMode {
          //Step ...: (Physical Instructions on how to control specific robot mechanism using controller buttons)
   */
 
-    //Controlled by Driver 1
-    //step 1: Push up/down the left/right stick to control the left/right drive motors
-    void updateDriveTrain() {
-            currentLeftPwr = -gamepad1.left_stick_y*DRIVE_PWR_MAX;
-            currentRightPwr = -gamepad1.right_stick_y*DRIVE_PWR_MAX;
-    }
-
 
     //Create variables/methods that will be used in ALL autonomous programs for this specific robot
 
@@ -95,10 +94,10 @@ public class RangerOp extends OpMode {
     void resetEncoders() {
 
     }
-    void runEncoders() {
+    void runConstantSpeed() {
 
     }
-    void runWithoutEncoders() {
+    void runConstantPower() {
 
     }
     void resetSensors() {
