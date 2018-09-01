@@ -36,8 +36,6 @@ public class BenjaminOp extends OpMode {
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftMotor=hardwareMap.get(DcMotor.class,"lm");
         rightMotor=hardwareMap.get(DcMotor.class,"rm");
-        leftMotor.setPower(leftPwr);
-        rightMotor.setPower(rightPwr);
         telemetry();
     }
     @Override public void loop() {
