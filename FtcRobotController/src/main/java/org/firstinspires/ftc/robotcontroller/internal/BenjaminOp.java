@@ -17,11 +17,16 @@ public class BenjaminOp extends OpMode {
     //Declare any motors
     DcMotor leftMotor;
     DcMotor rightMotor;
+    Servo clawArm;
+
 
     //Declare any variables & constants pertaining to drive train
     double maxPwr=0.8;
     double leftPwr=0.0;
     double rightPwr=0.0;
+    final double CLAW_ARM_START_POS = 0.2;
+    double clawArmPosition = CLAW_ARM_START_POS;
+    double clawDelta = 0.01;
 
     public BenjaminOp() {}
 
@@ -78,7 +83,11 @@ public class BenjaminOp extends OpMode {
          //Step 1: (Physical Instructions on how to control specific robot mechanism using controller buttons)
          //Step 2: (Physical Instructions on how to control specific robot mechanism using controller buttons)
          //Step ...: (Physical Instructions on how to control specific robot mechanism using controller buttons)
+         void.updateClaw()
   */
+    //driver1 controller
+    //Step 1: Press the Up/Down Button to move the claw servo towards 180/0
+    //Step 2:
 
     //Controlled by Driver 1
     //step 1: Push up/down the left/right stick to control the left/right drive motors
@@ -93,8 +102,11 @@ public class BenjaminOp extends OpMode {
     int state = 0; //used to control the steps taken during autonomous
     String stateName = ""; //Overwrite this as the specific step used in Autonomous
 
-    void resetEncoders() {
-
+    void updateClaw() {
+        if (gamepad1.dpad_up) {
+            clawArmPosition += clawDelta;
+        }
+        else if (gamepad1.dpad_down){clawArmPosition -= clawDelta;}
     }
     void runEncoders() {
 
