@@ -22,9 +22,11 @@ import com.qualcomm.robotcore.util.Range;
         final double DRIVE_MAX_PWR = 0.80;
         double currentLeftPwr = 0.0;
         double currentRightPwr = 0.0;
-        final double CLAW_ARM_START_POS = 0.2;
+        final double CLAW_ARM_START_POS = 0.5;
         double clawArmPosition = CLAW_ARM_START_POS;
-        double clawDelta = 0.01;
+        double clawDelta = 0.001;
+        final double CLAW_MAX = 1.0;
+        final double CLAW_MIN = 0.0;
 
 
         public MichaelOp() {}
@@ -37,7 +39,7 @@ import com.qualcomm.robotcore.util.Range;
             leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             //Initialize servos
-
+            clawArm = hardwareMap.servo.get("ca");
             //Initialize sensors
 
             telemetry();
@@ -56,7 +58,8 @@ import com.qualcomm.robotcore.util.Range;
 
         void updateData() {
             //Add in update methods for specific robot mechanisms
-
+            updateClaw();
+            updateDriveTrain();
         }
 
         void initialization() {
@@ -65,11 +68,14 @@ import com.qualcomm.robotcore.util.Range;
             leftMotor.setPower(currentLeftPwr);
             currentRightPwr = Range.clip(currentLeftPwr,-DRIVE_MAX_PWR,DRIVE_MAX_PWR);
             rightMotor.setPower(currentRightPwr);
+            clawArmPosition = Range.clip(clawArmPosition,CLAW_MIN,CLAW_MAX);
+            clawArm.setPosition(clawArmPosition);
         }
         void telemetry() {
             //Show Data for Specific Robot Mechanisms
             telemetry.addData("RM Pwr",rightMotor.getPower());
             telemetry.addData("LM Pwr",leftMotor.getPower());
+            telemetry.addData("Claw Pos",clawArm.getPosition());
 
         }
 
