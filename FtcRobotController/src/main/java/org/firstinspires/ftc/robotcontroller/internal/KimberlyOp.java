@@ -12,13 +12,17 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "KimberlyOp", group = "Default")
-@Disabled
+//@Disabled
 public class KimberlyOp extends OpMode {
     //Declare any motors, servos, and sensors
-
+    Servo clawArm; //180
 
     //Declare any variables & constants pertaining to specific robot mechanisms (i.e. drive train)
-
+    final double CLAW_ARM_START_POS = 0.5;
+    double clawArmPosition= CLAW_ARM_START_POS;
+    double clawDelta = 0.001;
+    final double CLAW_MIN = 0.0;
+    final double CLAW_MAX = 1.0;
 
     public KimberlyOp() {}
 
@@ -26,7 +30,7 @@ public class KimberlyOp extends OpMode {
         //Initialize motors & set direction
 
         //Initialize servos
-
+        clawArm = hardwareMap.servo.get("ca");
         //Initialize sensors
 
         telemetry();
@@ -45,16 +49,20 @@ public class KimberlyOp extends OpMode {
 
     void updateData() {
         //Add in update methods for specific robot mechanisms
+        updateClaw();
 
     }
 
     void initialization() {
         //Clip and Initialize Specific Robot Mechanisms
 
+        clawArmPosition = Range.clip(clawArmPosition,CLAW_MIN,CLAW_MAX);
+        clawArm.setPosition(clawArmPosition);
     }
     void telemetry() {
         //Show Data for Specific Robot Mechanisms
 
+        telemetry.addData("Claw Pos", clawArm.getPosition());
     }
 
     //Create Methods that will update the driver data
@@ -67,6 +75,16 @@ public class KimberlyOp extends OpMode {
          //Step ...: (Physical Instructions on how to control specific robot mechanism using controller buttons)
   */
 
+    //driver 1
+    //step 1: press the up/down button to move claw towards 180/0
+    void updateClaw () {
+        if (gamepad1.dpad_up) {
+            clawArmPosition+=clawDelta;
+        }
+        else if (gamepad1.dpad_down){
+            clawArmPosition-=clawDelta;
+        }
+    }
 
     //Create variables/methods that will be used in ALL autonomous programs for this specific robot
 
