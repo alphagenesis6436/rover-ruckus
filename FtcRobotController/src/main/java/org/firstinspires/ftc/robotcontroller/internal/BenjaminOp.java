@@ -17,17 +17,18 @@ public class BenjaminOp extends OpMode {
     //Declare any motors
     DcMotor leftMotor;
     DcMotor rightMotor;
-    Servo clawArm;
+    Servo clawArm; //180
 
 
     //Declare any variables & constants pertaining to drive train
     double maxPwr=0.8;
     double leftPwr=0.0;
     double rightPwr=0.0;
-    final double CLAW_ARM_START_POS = 0.2;
+    final double CLAW_ARM_START_POS = 0.5;
     double clawArmPosition = CLAW_ARM_START_POS;
-    double clawDelta = 0.01;
-
+    double clawDelta = 0.0001;
+    final double CLAW_MIN = 0.0;
+    final double CLAW_MAX = 1.0;
     public BenjaminOp() {}
 
     @Override public void init() {
@@ -36,6 +37,11 @@ public class BenjaminOp extends OpMode {
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftMotor=hardwareMap.get(DcMotor.class,"lm");
         rightMotor=hardwareMap.get(DcMotor.class,"rm");
+        //Initialize Servos
+        clawArm = hardwareMap.servo.get("ca");
+
+
+
         telemetry();
     }
     @Override public void loop() {
@@ -52,8 +58,7 @@ public class BenjaminOp extends OpMode {
 
     void updateData() {
         //Add in update methods for specific robot mechanisms
-        leftPwr=-gamepad1.left_stick_y*maxPwr;
-        rightPwr=-gamepad1.right_stick_y*maxPwr;
+        updateClaw();
         updateDriveTrain();
     }
 
@@ -63,13 +68,14 @@ public class BenjaminOp extends OpMode {
         rightPwr = Range.clip(rightPwr, -maxPwr, maxPwr);
         leftMotor.setPower(leftPwr);
         rightMotor.setPower(rightPwr);
-
+        clawArmPosition = Range.clip(clawArmPosition,CLAW_MIN,CLAW_MAX);
+        clawArm.setPosition(clawArmPosition);
     }
     void telemetry() {
         //Show Data for Drive Train
         telemetry.addData("leftMotor",leftPwr);
         telemetry.addData("rightMotor",rightPwr);
-
+        telemetry.addData("Claw Pos",clawArm.getPosition());
 
     }
 
@@ -90,7 +96,8 @@ public class BenjaminOp extends OpMode {
     //Controlled by Driver 1
     //step 1: Push up/down the left/right stick to control the left/right drive motors
     void updateDriveTrain() {
-
+        leftPwr=-gamepad1.left_stick_y*maxPwr;
+        rightPwr=-gamepad1.right_stick_y*maxPwr;
     }
 
 
@@ -104,7 +111,9 @@ public class BenjaminOp extends OpMode {
         if (gamepad1.dpad_up) {
             clawArmPosition += clawDelta;
         }
-        else if (gamepad1.dpad_down){clawArmPosition -= clawDelta;}
+        else if (gamepad1.dpad_down) {
+            clawArmPosition -= clawDelta;
+        }
     }
     void runEncoders() {
 
